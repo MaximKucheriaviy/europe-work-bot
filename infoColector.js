@@ -1,5 +1,6 @@
 const { quession } = require("./messages");
 const { createDocButtons } = require("./service");
+const { createCandidature } = require("./actions");
 
 const connectOptions = {
   reply_markup: {
@@ -35,7 +36,7 @@ const carOptions = {
   },
 };
 
-module.exports = (users = [], index = 0, info) => {
+module.exports = async (users = [], index = 0, info) => {
   switch (users[index].qType) {
     case "userName":
       users[index].userName = info;
@@ -114,8 +115,8 @@ module.exports = (users = [], index = 0, info) => {
       return;
     case "additional":
       users[index].additional = info;
-      users[index].qType = "finishqwe";
-      console.log(users[index]);
+      users[index].qType = "finish";
+      await createCandidature(users[index]);
       return;
   }
 };
